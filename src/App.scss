@@ -1,0 +1,21 @@
+@import 'components/variables';
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.vertical-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  writing-mode: tb-rl;
+  min-height: 10em;
+  line-height: 2em;
+  transform: rotate(-180deg);
+}

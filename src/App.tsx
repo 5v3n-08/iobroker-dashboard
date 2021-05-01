@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Fragment, FunctionComponent } from 'react';
+import { Router } from 'routes/Router';
 
-function App() {
+//* ----- Import styles -----
+import 'semantic-ui-css/semantic.min.css';
+// import './customSemantic.less';
+// import './customAntd.less';
+import './App.scss';
+import './vendor/styles/bootstrap.scss';
+import './vendor/styles/appwork.scss';
+import './vendor/styles/theme-corporate.scss';
+import './vendor/styles/colors.scss';
+import './vendor/styles/uikit.scss';
+import '@fortawesome/fontawesome-free/js/all';
+import { ErrorSnackbar } from 'components/error-snackbar/ErrorSnackbar';
+
+const App: FunctionComponent = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Fragment>
+      <Router />
+      <ErrorSnackbar />
+    </Fragment>
   );
-}
+};
 
 export default App;

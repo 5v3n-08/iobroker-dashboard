@@ -3,15 +3,25 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import { Store } from 'redux';
+import IStore from 'models/interfaces/IStore';
+import rootStore from 'stores/rootStore';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+(async (window: Window): Promise<void> => {
+  const initialState: Partial<IStore> = {};
+  const store: Store<IStore> = rootStore(initialState);
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+  const rootEl: HTMLElement | null = document.getElementById('root');
+  const render = (Component: typeof App, el: HTMLElement | null): void => {
+    ReactDOM.render(
+      <Provider store={store}>
+        <App />
+      </Provider>,
+      el
+    );
+  };
+  render(App, rootEl);
+})(window);
+
 reportWebVitals();
