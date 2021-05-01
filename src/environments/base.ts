@@ -8,7 +8,8 @@
 const baseEnv = (baseApi: string) => {
   return {
     socket: {
-      host: 'false',
+      host: process.env.REACT_APP_SOCKET_IO_HOST ?? 'ERROR',
+      port: parseInt(process.env.REACT_APP_SOCKET_IO_PORT ?? '8000'),
     },
     api: {},
     isProduction: true,

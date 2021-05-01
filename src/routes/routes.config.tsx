@@ -2,9 +2,9 @@ import React from 'react';
 import loadable, { LoadableComponent } from '@loadable/component';
 import pMinDelay from 'p-min-delay';
 import { Loader } from 'components/layouts/Loader/Loader';
+import { LayoutHorizontalSidenav } from 'components/layouts/LayoutHorizontalSidenav';
 
 //* ----- Import Layouts -----
-import { Layout1 } from 'components/layouts/Layout1';
 
 // Lazy load component
 // eslint-disable-next-line
@@ -14,7 +14,7 @@ export const lazy = (cb: any) =>
 // ---
 // Default application layout
 
-export const DefaultLayout = Layout1;
+export const DefaultLayout = LayoutHorizontalSidenav;
 
 // ---
 // Document title template

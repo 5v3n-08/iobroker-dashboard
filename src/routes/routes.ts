@@ -1,5 +1,3 @@
-import { LayoutHorizontalSidenav } from 'components/layouts/LayoutHorizontalSidenav';
-import { LayoutBlank } from 'components/layouts/LayoutBlank';
 import { IRoute, lazy } from './routes.config';
 
 export const routes: IRoute[] = [
@@ -8,6 +6,5 @@ export const routes: IRoute[] = [
     name: 'Landing',
     onSidenav: false,
     component: lazy(() => import('pages/landing/Landing')),
-    layout: LayoutHorizontalSidenav,
   },
 ];

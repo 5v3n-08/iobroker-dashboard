@@ -13,12 +13,15 @@ import './vendor/styles/colors.scss';
 import './vendor/styles/uikit.scss';
 import '@fortawesome/fontawesome-free/js/all';
 import { ErrorSnackbar } from 'components/error-snackbar/ErrorSnackbar';
+import { WebsocketContextProvider } from 'hooks/useWebsocket';
 
 const App: FunctionComponent = () => {
   return (
     <Fragment>
-      <Router />
-      <ErrorSnackbar />
+      <WebsocketContextProvider>
+        <Router />
+        <ErrorSnackbar />
+      </WebsocketContextProvider>
     </Fragment>
   );
 };
