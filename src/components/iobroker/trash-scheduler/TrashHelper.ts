@@ -12,10 +12,10 @@ export const trashImages = {
 };
 
 export const trashTypes: { [key in TTrashType]: string[] } = {
-  trash_blue: ['blaue'],
-  trash_yellow: ['gelbe'],
-  trash_grey: ['graue'],
-  trash_brown: ['braune'],
+  trash_blue: ['blaue', 'papier'],
+  trash_yellow: ['gelbe', 'gelbetonne'],
+  trash_grey: ['graue', 'restmüll'],
+  trash_brown: ['braune', 'bioabfall'],
 };
 
 export const findTrashType = (values: string = ''): TTrashType[] => {
