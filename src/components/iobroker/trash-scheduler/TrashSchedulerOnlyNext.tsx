@@ -26,8 +26,8 @@ export const TrashSchedulerOnlyNext: React.FC<IProps> = (props: React.PropsWithC
   return (
     <Card className={['text-center', daysLeft.value <= 1 ? 'border-danger' : null].join(' ')} bodyStyle={{ padding: '0.75rem 1rem' }}>
       <div className="small text-muted">Nächste Abholung:</div>
-      <span>{daysLeftText()}</span>
-      <div className="mt-3 d-flex justify-content-center">
+      <h4>{daysLeftText()}</h4>
+      <div className="d-flex justify-content-center">
         {trashTypes.map((type) => (
           <div key={type}>
             <img width={40} src={trashImages[type]} alt="" />
