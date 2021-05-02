@@ -1,5 +1,5 @@
 import IStore from 'models/interfaces/IStore';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectObject } from 'stores/objects/ObjectsSelector';
 import { useWebsocket } from './useWebsocket';
@@ -21,9 +21,12 @@ export const useObject = <T,>(identifier: string, options?: IOptions): IUseObjec
     }
   }, [getState, identifier, object, subscribe]);
 
-  const setValue = (value: T) => {
-    setState(identifier, value);
-  };
+  const setValue = useCallback(
+    (value: T) => {
+      setState(identifier, value);
+    },
+    [identifier, setState]
+  );
 
   return { value: object?.val as T, setValue, isLoading };
 };

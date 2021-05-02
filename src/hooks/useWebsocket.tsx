@@ -1,6 +1,6 @@
 import { Modal, Tabs } from 'antd';
 import _ from 'lodash';
-import React, { Fragment, useEffect, useReducer } from 'react';
+import React, { Fragment, useCallback, useEffect, useReducer } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import io from 'socket.io-client';
 import environment from 'environment';
@@ -29,7 +29,7 @@ export const WebsocketContextProvider: React.FC<IProps> = (props: React.PropsWit
       });
 
       socket.on('stateChange', (identifier: string, object: IRawObject) => {
-        console.log(identifier, object);
+        // console.log(identifier, object);
         dispatchStore(ObjectsAction.storeObject({ identifier, object }));
       });
 
@@ -40,20 +40,28 @@ export const WebsocketContextProvider: React.FC<IProps> = (props: React.PropsWit
     };
   }, [state.socket, dispatch, dispatchStore]);
 
-  const _addSubscription = (identifier: string) => {
+  const _addSubscription = useCallback((identifier: string) => {
     dispatch({ type: EWebsocketActions.ADD_SUBSCRIPTION, payload: identifier });
-  };
-  const setState = (identifier: string, value: any) => {
-    socket?.emit('setState', identifier, value);
-  };
-  const getState = (identifier: string, subscribe: boolean = true) => {
-    if (subscribe && !state.subscriptions.includes(identifier)) {
-      _addSubscription(identifier);
-    }
-    socket?.emit('getState', identifier, (value: any, object: IRawObject) => {
-      dispatchStore(ObjectsAction.storeObject({ identifier, object }));
-    });
-  };
+  }, []);
+
+  const setState = useCallback(
+    (identifier: string, value: any) => {
+      socket?.emit('setState', identifier, value);
+    },
+    [socket]
+  );
+
+  const getState = useCallback(
+    (identifier: string, subscribe: boolean = true) => {
+      if (subscribe && !state.subscriptions.includes(identifier)) {
+        _addSubscription(identifier);
+      }
+      socket?.emit('getState', identifier, (value: any, object: IRawObject) => {
+        dispatchStore(ObjectsAction.storeObject({ identifier, object }));
+      });
+    },
+    [_addSubscription, dispatchStore, socket, state.subscriptions]
+  );
 
   return <WebsocketContext.Provider value={{ setState, getState }}>{props.children}</WebsocketContext.Provider>;
 };
