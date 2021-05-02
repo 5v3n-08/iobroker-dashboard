@@ -1,5 +1,6 @@
 import { HueLamp } from 'components/iobroker/hue-lamp/HueLamp';
 import { PowerSwitch } from 'components/iobroker/power-switch/PowerSwitch';
+import { WashingMachineCountdown } from 'components/iobroker/washing-machine-countdown/WashingMachineCountdown';
 import { TrashSchedulerOnlyNext } from 'components/iobroker/trash-scheduler/TrashSchedulerOnlyNext';
 import React, { Fragment } from 'react';
 
@@ -11,9 +12,7 @@ const Landing: React.FC<IProps> = (props: React.PropsWithChildren<IProps>) => {
         <TrashSchedulerOnlyNext identifier="trashschedule.0" />
       </div>
       <div className="row">
-        <HueLamp className="col-2 mr-1" identifier="hue.0.Büro_PC_links" name="PC - links" room="Büro" />
-        <HueLamp className="col-2 mx-1" identifier="hue.0.Büro_PC_rechts" name="PC - rechts" room="Büro" />
-        <PowerSwitch className="col-2 mx-1" identifier="hue.0.Büro_PC_rechts.on" iconSet="switch" name="PC - rechts" room="Büro" />
+        <WashingMachineCountdown name="Waschmaschiene" hours={3} minutes={30} />
       </div>
     </Fragment>
   );
