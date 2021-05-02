@@ -19,8 +19,8 @@ export const TrashSchedulerOnlyNext: React.FC<IProps> = (props: React.PropsWithC
   const daysLeftText = () => {
     if (daysLeft.value == 0) return 'Heute';
     if (daysLeft.value == 1) return 'Morgen';
-    if (daysLeft.value <= 7) return moment(date.value).format('dddd');
-    return moment(date.value).format('DD.MM.YYYY');
+    if (daysLeft.value <= 7) return moment(date.value, 'DD.MM.YYYY').format('dddd');
+    return moment(date.value, 'DD.MM.YYYY').format('DD.MM.YYYY');
   };
 
   return (
