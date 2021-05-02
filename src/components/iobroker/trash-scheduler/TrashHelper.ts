@@ -27,7 +27,7 @@ export const findTrashType = (values: string = ''): TTrashType[] => {
       value.split(' ').forEach((word) => {
         _.each(trashTypes, (names, trashType) => {
           _.each(names, (name) => {
-            if (name.includes(word)) {
+            if (name.includes(word) && !foundTypes.includes(trashType as TTrashType)) {
               foundTypes.push(trashType as TTrashType);
               return;
             }
