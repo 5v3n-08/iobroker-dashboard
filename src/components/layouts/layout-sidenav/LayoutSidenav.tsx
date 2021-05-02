@@ -36,7 +36,7 @@ export const LayoutSidenav: React.FC<IProps> = (props: React.PropsWithChildren<I
   return (
     <Sidenav orientation={props.orientation} className={[layoutSidenavClasses()].join(' ')}>
       {/* Links */}
-      <div className={`sidenav-inner ${props.orientation !== 'horizontal' ? 'py-1' : ''}`}>
+      <div className={`sidenav-inner d-flex justify-content-center ${props.orientation !== 'horizontal' ? 'py-1' : ''}`}>
         {routes.map((route) => (
           <SidenavRouterLink key={route.path} to={route.path} exact={route.exact} icon={route.icon}>
             <span className="ml-2">{route.name}</span>
