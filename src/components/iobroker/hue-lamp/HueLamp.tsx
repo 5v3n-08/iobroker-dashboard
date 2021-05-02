@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useObject } from 'hooks/useObject';
 import lightbulbOn from 'assets/svg/lightbulb_on.svg';
 import lightbulbOff from 'assets/svg/lightbulb_off.svg';
-import { Avatar, Card } from 'antd';
+import { Avatar, Card, Modal, Slider } from 'antd';
 import Meta from 'antd/lib/card/Meta';
 import { useLongPress } from 'hooks/useLongPress';
+import { Button } from 'semantic-ui-react';
+import _ from 'lodash';
 
 interface IProps {
   name: string;
@@ -13,33 +15,64 @@ interface IProps {
   className?: string;
 }
 export const HueLamp: React.FC<IProps> = (props: React.PropsWithChildren<IProps>) => {
-  const { identifier, className } = props;
+  const { identifier } = props;
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [brightness, setBrightness] = useState(0);
   const on = useObject<boolean>(`${identifier}.on`);
-  const bri = useObject<number>(`${identifier}.bri`);
+  const level = useObject<number>(`${identifier}.level`);
 
-  const onLongPress = () => {
-    console.log('long pressed');
-  };
-  const onClick = () => {
-    on.setValue(!on.value);
-  };
-  const longPressEvent = useLongPress(onClick, onLongPress, {
-    shouldPreventDefault: true,
-    delay: 300,
-  });
+  const levelValue = level.value;
+  useEffect(() => {
+    setBrightness(levelValue);
+  }, [levelValue]);
+
+  const longPressEvent = useLongPress(
+    (e) => on.setValue(!on.value),
+    () => setModalOpen(true),
+    {
+      shouldPreventDefault: true,
+      delay: 300,
+    }
+  );
 
   return (
-    <Card
-      // onClick={(e) => on.setValue(!on.value)}
-      {...longPressEvent}
-      cover={<img className="text-center" src={lightbulbOn} style={{ height: 50, width: 50 }} />}
-      actions={[<span key="1">Test1</span>, <span key="2">Test1</span>]}
-    >
-      <Meta
-        avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-        title="Card title"
-        description="This is the description"
-      />
-    </Card>
+    <Fragment>
+      <Card className={props.className} {...longPressEvent} bodyStyle={{ padding: '0.75rem 2rem' }}>
+        <div className="text-center small text-muted">{props.room}</div>
+        <div className="text-center small">{props.name}</div>
+        <div className="text-center my-2">
+          <img src={on.value ? lightbulbOn : lightbulbOff} style={{ height: 50, width: 50 }} />
+        </div>
+      </Card>
+      <Modal title={<div className="text-center">{`${props.name}`}</div>} visible={isModalOpen} footer={false} onCancel={() => setModalOpen(false)}>
+        <div className="d-flex justify-content-center">
+          <div className="text-center">
+            <img src={on.value ? lightbulbOn : lightbulbOff} style={{ height: 125, width: 125 }} onClick={() => on.setValue(!on.value)} />
+            <div className="mt-3">
+              <Button.Group widths="1">
+                <Button disabled={on.value} onClick={() => on.setValue(true)}>
+                  An
+                </Button>
+                <Button disabled={!on.value} onClick={() => on.setValue(false)}>
+                  Aus
+                </Button>
+              </Button.Group>
+            </div>
+          </div>
+
+          <Slider
+            className="ml-5 mt-2"
+            vertical
+            value={brightness}
+            min={0}
+            max={100}
+            marks={{ 0: '0%', 100: '100%' }}
+            onChange={(value: number) => setBrightness(value)}
+            onAfterChange={(value: number) => level.setValue(value)}
+            style={{ display: 'inline-block', height: 150 }}
+          />
+        </div>
+      </Modal>
+    </Fragment>
   );
 };
