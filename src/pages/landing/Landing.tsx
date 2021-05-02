@@ -1,4 +1,4 @@
-import { HueLamp } from 'components/hue-lamp/HueLamp';
+import { HueLamp } from 'components/iobroker/hue-lamp/HueLamp';
 import React, { Fragment } from 'react';
 
 interface IProps {}

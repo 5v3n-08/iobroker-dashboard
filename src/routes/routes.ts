@@ -7,4 +7,10 @@ export const routes: IRoute[] = [
     onSidenav: false,
     component: lazy(() => import('pages/landing/Landing')),
   },
+  {
+    path: '/bigalke',
+    name: 'Bigalke',
+    onSidenav: false,
+    component: lazy(() => import('pages/bigalke/Landing')),
+  },
 ];
