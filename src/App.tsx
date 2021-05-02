@@ -1,5 +1,9 @@
 import React, { Fragment, FunctionComponent } from 'react';
 import { Router } from 'routes/Router';
+import { ErrorSnackbar } from 'components/error-snackbar/ErrorSnackbar';
+import { WebsocketContextProvider } from 'hooks/useWebsocket';
+import moment from 'moment';
+import 'moment/locale/de';
 
 //* ----- Import styles -----
 import 'semantic-ui-css/semantic.min.css';
@@ -12,10 +16,9 @@ import './vendor/styles/theme-corporate.scss';
 import './vendor/styles/colors.scss';
 import './vendor/styles/uikit.scss';
 import '@fortawesome/fontawesome-free/js/all';
-import { ErrorSnackbar } from 'components/error-snackbar/ErrorSnackbar';
-import { WebsocketContextProvider } from 'hooks/useWebsocket';
 
 const App: FunctionComponent = () => {
+  moment.locale('de');
   return (
     <Fragment>
       <WebsocketContextProvider>
