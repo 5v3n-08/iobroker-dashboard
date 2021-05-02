@@ -31,7 +31,7 @@ export const defaultRoute = '/';
 
 export interface IRoute {
   path: string;
-  component: LoadableComponent<any> | null;
+  component(): LoadableComponent<any> | null;
   children?: IRoute[];
   name: string;
   icon?: string;

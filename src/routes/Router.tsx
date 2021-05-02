@@ -66,6 +66,7 @@ export const Router: React.FC<IProps> = (props: React.PropsWithChildren<IProps>)
   const buildRoute = (route: IRoute) => {
     if (!route.layout) route.layout = DefaultLayout;
     if (!route.exact) route.exact = true;
+    const Component = route.component();
 
     return (
       <Route
@@ -81,9 +82,7 @@ export const Router: React.FC<IProps> = (props: React.PropsWithChildren<IProps>)
           // Scroll page to top on route render
           scrollTop(0, 0);
           // Return layout
-          return (
-            <route.layout {...props}>{route.component && <route.component {...props} setTitle={setTitle} scrollTop={scrollTop} />}</route.layout>
-          );
+          return <route.layout {...props}>{Component && <Component {...props} setTitle={setTitle} scrollTop={scrollTop} />}</route.layout>;
         }}
       />
     );
