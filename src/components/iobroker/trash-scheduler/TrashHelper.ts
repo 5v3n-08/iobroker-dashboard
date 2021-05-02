@@ -1,8 +1,8 @@
 import _ from 'lodash';
-import trash_blue from 'assets/svg/trash/trash_blue.svg';
-import trash_yellow from 'assets/svg/trash/trash_yellow.svg';
-import trash_grey from 'assets/svg/trash/trash_grey.svg';
-import trash_brown from 'assets/svg/trash/trash_brown.svg';
+import trash_blue from './svg/trash_blue.svg';
+import trash_yellow from './svg/trash_yellow.svg';
+import trash_grey from './svg/trash_grey.svg';
+import trash_brown from './svg/trash_brown.svg';
 
 export const trashImages = {
   trash_blue,
