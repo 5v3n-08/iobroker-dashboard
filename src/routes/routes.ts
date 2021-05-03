@@ -21,4 +21,10 @@ export const routes: IRoute[] = [
     onSidenav: false,
     component: () => lazy(() => import('pages/bigalke/Landing')),
   },
+  {
+    path: '/roborock',
+    name: 'Roborock',
+    onSidenav: false,
+    component: () => lazy(() => import('components/iobroker/roborock/components/widget/full/RoborockWidgetCardFull')),
+  },
 ];
