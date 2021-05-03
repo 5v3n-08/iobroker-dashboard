@@ -26,11 +26,11 @@ export const RoborockWidgetCardFull: React.FC<IProps> = (props: React.PropsWithC
   const { identifier, className } = props;
   // const on = useObject<boolean>(identifier);
   const battery = useObject<number>(`${identifier}.info.battery`);
-  const queue = useObject<string[]>(`${identifier}.info.queue`);
+  const queue = useObject<string[]>(`${identifier}.info.queue`, { toJson: true });
   // const rooms = roborockRoomIds
   const rooms = useObject<string[]>(`${identifier}.rooms`);
   console.log('rooms');
-  console.log(queue.value);
+  console.log(_.size(queue.value));
 
   return (
     <Badge.Ribbon text={battery.value + '%'} color={battery.value <= 10 ? 'red' : battery.value < 20 ? 'yellow' : 'primary'} placement="start">

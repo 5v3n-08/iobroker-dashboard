@@ -52,11 +52,14 @@ export const WebsocketContextProvider: React.FC<IProps> = (props: React.PropsWit
   );
 
   const getState = useCallback(
-    (identifier: string, subscribe: boolean = true) => {
+    (identifier: string, subscribe: boolean = true, toJson: boolean = false) => {
       if (subscribe && !state.subscriptions.includes(identifier)) {
         _addSubscription(identifier);
       }
       socket?.emit('getState', identifier, (value: any, object: IRawObject) => {
+        console.log(identifier, object);
+        if (toJson) object.val = JSON.parse(object.val);
+
         dispatchStore(ObjectsAction.storeObject({ identifier, object }));
       });
     },
@@ -68,7 +71,7 @@ export const WebsocketContextProvider: React.FC<IProps> = (props: React.PropsWit
 
 interface IContextProps {
   setState(id: string, value: any): void;
-  getState(id: string, subscribe?: boolean): void;
+  getState(id: string, subscribe?: boolean, toJson?: boolean): void;
 }
 export const WebsocketContext = React.createContext<IContextProps>({
   setState: () => console.log('[useWebsocket] createContext error -> setState'),

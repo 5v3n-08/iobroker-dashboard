@@ -6,6 +6,7 @@ import { useWebsocket } from './useWebsocket';
 
 interface IOptions {
   subscribe?: boolean;
+  toJson?: boolean;
 }
 
 export const useObject = <T,>(identifier: string, options?: IOptions): IUseObjectReturn<T> => {
@@ -15,11 +16,12 @@ export const useObject = <T,>(identifier: string, options?: IOptions): IUseObjec
   const isLoading = !object?.ack;
 
   const subscribe = options?.subscribe;
+  const toJson = options?.toJson;
   useEffect(() => {
     if (object === undefined) {
-      getState(identifier, subscribe);
+      getState(identifier, subscribe, toJson);
     }
-  }, [getState, identifier, object, subscribe]);
+  }, [getState, identifier, object, subscribe, toJson]);
 
   const setValue = useCallback(
     (value: T) => {
