@@ -1,4 +1,4 @@
-import { Badge, Card, Col, Row } from 'antd';
+import { Badge, Card, Col, Row, Statistic } from 'antd';
 const { Meta } = Card;
 import React, { Fragment, useEffect } from 'react';
 import { useObject } from 'hooks/useObject';
@@ -29,6 +29,19 @@ export const RoborockWidgetCardFull: React.FC<IProps> = (props: React.PropsWithC
   const queue = useObject<string[]>(`${identifier}.info.queue`, { toJson: true });
   // const rooms = roborockRoomIds
   const rooms = useObject<string[]>(`${identifier}.rooms`);
+
+  // consumables
+  const consumFilter = useObject<number>(`${identifier}.consumable.filter`);
+  const consumMain = useObject<number>(`${identifier}.consumable.main_brush`);
+  const consumSensors = useObject<number>(`${identifier}.consumable.sensors`);
+  const consumSideBrush = useObject<number>(`${identifier}.consumable.side_brush`);
+  const consumWaterFilter = useObject<number>(`${identifier}.consumable.water_filter`);
+
+  // History
+  const historyTotalArea = useObject<number>(`${identifier}.history.total_area`);
+  const historyTotalCleanups = useObject<number>(`${identifier}.history.total_cleanups`);
+  const historyTotalTime = useObject<number>(`${identifier}.history.total_time`);
+
   console.log('rooms');
   console.log(_.size(queue.value));
 
@@ -57,12 +70,18 @@ export const RoborockWidgetCardFull: React.FC<IProps> = (props: React.PropsWithC
         <Row className="mt-2">
           <Col>
             <Card title="Wartung" size="small">
-              test
+              <Statistic title="Filter" value={consumFilter.value} suffix="%" />
+              <Statistic title="Hauptbürste" value={consumMain.value} suffix="%" />
+              <Statistic title="Sensoren" value={consumSensors.value} suffix="%" />
+              <Statistic title="Seitenbürste" value={consumSideBrush.value} suffix="%" />
+              <Statistic title="Wasser Filter" value={consumWaterFilter.value} suffix="%" />
             </Card>
           </Col>
-          <Col>
+          <Col className="ml-2">
             <Card title="Statistiken" size="small">
-              test
+              <Statistic title="Reinigungen" value={historyTotalCleanups.value} />
+              <Statistic title="Zeit" value={historyTotalTime.value} suffix=" Stunden" />
+              <Statistic title="Gereinigt" value={historyTotalArea.value} suffix=" m2" />
             </Card>
           </Col>
         </Row>
