@@ -5,14 +5,13 @@ import { ReactSVG } from 'react-svg';
 import vacuum from 'components/iobroker/roborock/assets/icons/vacuum-cleaner.svg';
 import { Link } from 'react-router-dom';
 import { Button, Modal } from 'semantic-ui-react';
+import { RoborockWidgetCardFull } from './widget/full/RoborockWidgetCardFull';
 
 interface IProps {
   title?: string;
-  icon?: boolean;
   room?: string;
   identifier: string;
   className?: string;
-  extended?: boolean;
   hideModal?(): void;
   isModalVisible: boolean;
 }
@@ -33,9 +32,8 @@ export const RoborockModal: React.FC<IProps> = (props: React.PropsWithChildren<I
   return (
     <Fragment>
       <Modal title="Basic Modal" open={props.isModalVisible} onClose={handleCancel} size="small">
-        <Modal.Header>Select a Photo</Modal.Header>
         <Modal.Content>
-          <p>Your inbox is getting full, would you like us to enable automatic archiving of old messages?</p>
+          <RoborockWidgetCardFull identifier={identifier} title={props.title} room={props.room} />
         </Modal.Content>
         <Modal.Actions>
           <Button color="red" onClick={handleCancel}>

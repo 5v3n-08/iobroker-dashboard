@@ -1,4 +1,4 @@
-import { Badge, Card, Col, Row, Statistic, Tag } from 'antd';
+import { Badge, Card, Col, Progress, Row, Statistic, Tag } from 'antd';
 const { Meta } = Card;
 import React, { Fragment, useEffect } from 'react';
 import { useObject } from 'hooks/useObject';
@@ -9,6 +9,7 @@ import { RoborockFanPower } from './components/FanPower';
 import { roborockRoomIds } from 'configOverrides/roborock.config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import _ from 'lodash';
+import { CaretRightOutlined, PauseOutlined, HomeOutlined } from '@ant-design/icons';
 
 interface IProps {
   title?: string;
@@ -20,6 +21,9 @@ interface IProps {
   components?: {
     fan?: boolean;
     tasks?: boolean;
+    maintenance?: boolean;
+    statistics?: boolean;
+    actions?: boolean;
   };
 }
 export const RoborockWidgetCardFull: React.FC<IProps> = (props: React.PropsWithChildren<IProps>) => {
@@ -42,12 +46,25 @@ export const RoborockWidgetCardFull: React.FC<IProps> = (props: React.PropsWithC
   const historyTotalCleanups = useObject<number>(`${identifier}.history.total_cleanups`);
   const historyTotalTime = useObject<number>(`${identifier}.history.total_time`);
 
-  console.log('rooms');
-  console.log(_.size(queue.value));
+  // Actions
+  const cmdStart = useObject<boolean>(`${identifier}.control.start`);
+  const cmdPause = useObject<boolean>(`${identifier}.control.pause`);
+  const cmdHome = useObject<boolean>(`${identifier}.control.home`);
 
   return (
     <Badge.Ribbon text={battery.value + '%'} color={battery.value <= 10 ? 'red' : battery.value < 20 ? 'yellow' : 'primary'} placement="start">
-      <Card className={[className, 'text-center'].join(' ')}>
+      <Card
+        className={[className, 'text-center'].join(' ')}
+        actions={
+          props.components?.actions === undefined || props.components.actions !== false
+            ? [
+                <CaretRightOutlined key="start" onClick={() => cmdStart.setValue(true)} />,
+                <PauseOutlined key="pause" onClick={() => cmdPause.setValue(true)} />,
+                <HomeOutlined key="home" onClick={() => cmdHome.setValue(true)} />,
+              ]
+            : undefined
+        }
+      >
         <Row>
           <Col>
             <Meta
@@ -59,7 +76,7 @@ export const RoborockWidgetCardFull: React.FC<IProps> = (props: React.PropsWithC
               <RoborockFanPower identifier={identifier + '.control.fan_power'} />
             )}
           </Col>
-          <Col className="ml-2">
+          <Col className="ml-5">
             {(props.components?.tasks === undefined || props.components.tasks !== false) && (
               <Badge.Ribbon text={_.size(queue.value)}>
                 <Card title={_.size(queue.value) > 0 ? 'Aufgaben' : undefined}>
@@ -75,23 +92,57 @@ export const RoborockWidgetCardFull: React.FC<IProps> = (props: React.PropsWithC
             )}
           </Col>
         </Row>
-        <Row className="mt-2">
-          <Col>
-            <Card title="Wartung" size="small">
-              <Statistic title="Filter" value={consumFilter.value} suffix="%" />
-              <Statistic title="Hauptbürste" value={consumMain.value} suffix="%" />
-              <Statistic title="Sensoren" value={consumSensors.value} suffix="%" />
-              <Statistic title="Seitenbürste" value={consumSideBrush.value} suffix="%" />
-              <Statistic title="Wasser Filter" value={consumWaterFilter.value} suffix="%" />
-            </Card>
-          </Col>
-          <Col className="ml-2">
-            <Card title="Statistiken" size="small">
-              <Statistic title="Reinigungen" value={historyTotalCleanups.value} />
-              <Statistic title="Zeit" value={historyTotalTime.value} suffix=" Stunden" />
-              <Statistic title="Gereinigt" value={historyTotalArea.value} suffix=" m2" />
-            </Card>
-          </Col>
+        <Row className="mt-4">
+          {(props.components?.maintenance === undefined || props.components.maintenance !== false) && (
+            <Col>
+              <Card title="Wartung" size="small">
+                <div>
+                  Filter
+                  <br />
+                  <Progress percent={consumFilter.value} size="small" />
+                </div>
+                <div>
+                  Hauptbürste
+                  <br />
+                  <Progress type="circle" percent={consumMain.value} width={50} />
+                </div>
+                <Statistic title="Sensoren" value={consumSensors.value} suffix="%" />
+                <div>
+                  Seitenbürste
+                  <br />
+                  <Progress
+                    percent={consumSideBrush.value}
+                    size="small"
+                    strokeColor={{
+                      '0%': '#FF0000',
+                      '100%': '#87d068',
+                    }}
+                  />
+                </div>
+                <div>
+                  Wasser Filter
+                  <br />
+                  <Progress
+                    percent={consumWaterFilter.value}
+                    size="small"
+                    strokeColor={{
+                      '0%': '#FF0000',
+                      '100%': '#87d068',
+                    }}
+                  />
+                </div>
+              </Card>
+            </Col>
+          )}
+          {(props.components?.statistics === undefined || props.components.statistics !== false) && (
+            <Col className="ml-3">
+              <Card title="Statistiken" size="small">
+                <Statistic title="Reinigungen" value={historyTotalCleanups.value} />
+                <Statistic title="Zeit" value={historyTotalTime.value} suffix=" Stunden" />
+                <Statistic title="Gereinigt" value={historyTotalArea.value} suffix=" m2" />
+              </Card>
+            </Col>
+          )}
         </Row>
         {/* {_.size(rooms) === 0} ({' '}
         <Alert message="No Rooms are defined!" type="warning"></Alert>) roomIds */}
