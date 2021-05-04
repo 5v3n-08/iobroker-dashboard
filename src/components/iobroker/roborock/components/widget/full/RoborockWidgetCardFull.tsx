@@ -1,4 +1,4 @@
-import { Badge, Card, Col, Row, Statistic } from 'antd';
+import { Badge, Card, Col, Row, Statistic, Tag } from 'antd';
 const { Meta } = Card;
 import React, { Fragment, useEffect } from 'react';
 import { useObject } from 'hooks/useObject';
@@ -61,9 +61,17 @@ export const RoborockWidgetCardFull: React.FC<IProps> = (props: React.PropsWithC
           </Col>
           <Col className="ml-2">
             {(props.components?.tasks === undefined || props.components.tasks !== false) && (
-              <Card title="Aufgaben" size="small">
-                {_.size(queue.value) > 0 ? _.size(queue.value) : <FontAwesomeIcon icon={['fas', 'check']} />}
-              </Card>
+              <Badge.Ribbon text={_.size(queue.value)}>
+                <Card title={_.size(queue.value) > 0 ? 'Aufgaben' : undefined}>
+                  {_.size(queue.value) === 0 ? 'Aufgaben' : undefined}
+                  {queue.value?.map((segment, i) => (
+                    <Tag key={'segment_' + i} color="processing">
+                      {segment.replace('segment ', '')}
+                    </Tag>
+                  ))}
+                  {/* {_.size(queue.value) > 0 ? _.size(queue.value) : <FontAwesomeIcon icon={['fas', 'check']} />} */}
+                </Card>
+              </Badge.Ribbon>
             )}
           </Col>
         </Row>

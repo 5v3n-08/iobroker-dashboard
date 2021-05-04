@@ -57,7 +57,7 @@ export const WebsocketContextProvider: React.FC<IProps> = (props: React.PropsWit
         _addSubscription(identifier);
       }
       socket?.emit('getState', identifier, (value: any, object: IRawObject) => {
-        console.log(identifier, object);
+        // console.log(identifier, object);
         if (toJson) object.val = JSON.parse(object.val);
 
         dispatchStore(ObjectsAction.storeObject({ identifier, object }));
