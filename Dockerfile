@@ -1,10 +1,21 @@
 #Build Steps
-FROM mhart/alpine-node:14 as build-step
 
-RUN mkdir /app
+FROM --platform=linux/arm/v7 node:15-alpine as build-step
+
+
+#RUN mkdir /app
 WORKDIR /app
 
 COPY package.json /app
+
+RUN apk --no-cache add --virtual native-deps \
+  g++ gcc libgcc libstdc++ linux-headers make python && \
+  npm install --quiet node-gyp -g &&\
+  apk del native-deps
+
+
+  #npm install --quiet && \
+
 RUN npm install
 COPY . /app
 
