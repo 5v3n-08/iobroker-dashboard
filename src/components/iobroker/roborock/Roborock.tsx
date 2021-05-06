@@ -7,6 +7,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { RoborockWidgetCardSmall } from './components/widget/small/RoborockWidgetCardSmall';
 import { RoborockModal } from './components/RoborockModal';
 import { RoborockWidgetCardFull } from './components/widget/full/RoborockWidgetCardFull';
+import { EConsumableTitle } from './components/RoborockConsumables';
 
 interface IProps {
   widget: 'small' | 'extended' | 'full';
@@ -30,7 +31,14 @@ export const Roborock: React.FC<IProps> = (props: React.PropsWithChildren<IProps
       {props.widget === 'extended' && (
         <RoborockWidgetCardSmall extended identifier={identifier} openType={props.openType} title={props.title} room={props.room} />
       )}
-      {props.widget === 'full' && <RoborockWidgetCardFull identifier={identifier} title={props.title} room={props.room} />}
+      {props.widget === 'full' && (
+        <RoborockWidgetCardFull
+          identifier={identifier}
+          title={props.title}
+          room={props.room}
+          components={{ consumables: [EConsumableTitle.filter, EConsumableTitle.sensors] }}
+        />
+      )}
     </Fragment>
   );
 };

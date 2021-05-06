@@ -5,7 +5,15 @@ import React, { Fragment, useEffect, useState } from 'react';
 
 interface IProps {
   identifier: string;
-  consumables?: IRoborockConsumables;
+  consumables?: EConsumableTitle[];
+}
+
+export enum EConsumableTitle {
+  filter = 'Filter',
+  main_brush = 'Hauptbürste',
+  sensors = 'Sensoren',
+  side_brush = 'Seitenbürste',
+  water_filter = 'Wasserfilter',
 }
 
 const CConsumableTitle = {
@@ -28,7 +36,8 @@ export const RoborockConsumables: React.FC<IProps> = (props: React.PropsWithChil
 
   return (
     <Fragment>
-      {_.each(consumables, (active, consumableType) => {
+      {consumables?.join(',')}
+      {/* {_.each(consumables, (active, consumableType) => {
         const consum =
           consumableType === 'filter'
             ? consumFilter
@@ -53,7 +62,7 @@ export const RoborockConsumables: React.FC<IProps> = (props: React.PropsWithChil
             />
           </div>
         );
-      })}
+      })} */}
     </Fragment>
   );
 };
