@@ -36,23 +36,24 @@ export const RoborockConsumables: React.FC<IProps> = (props: React.PropsWithChil
 
   return (
     <Fragment>
-      {consumables?.join(',')}
-      {/* {_.each(consumables, (active, consumableType) => {
+      {/* {consumables?.map((consumable, index) => ( */}
+      {_.each(consumables, (consumable, index: number) => {
+        console.log(consumable);
         const consum =
-          consumableType === 'filter'
+          index === 0
             ? consumFilter
-            : consumableType === 'main_brush'
+            : index === 1
             ? consumMainBrush
-            : consumableType === 'sensors'
+            : index === 2
             ? consumSensors
-            : consumableType === 'side_brush'
+            : index === 3
             ? consumSideBrush
             : consumWaterFilter;
-        consum.value <= 10 && (
+        consum.value <= 100 && (
           <div>
-            <div className="small text-muted">{consum.value}</div>
+            <div className="small text-muted">{consumable}</div>test
             <Progress
-              //   percent={consum.value}
+              percent={consum.value}
               size="small"
               strokeColor={{
                 '0%': '#FF0000',
@@ -62,7 +63,7 @@ export const RoborockConsumables: React.FC<IProps> = (props: React.PropsWithChil
             />
           </div>
         );
-      })} */}
+      })}
     </Fragment>
   );
 };

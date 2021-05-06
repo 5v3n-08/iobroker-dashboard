@@ -27,7 +27,7 @@ interface IProps {
     maintenance?: boolean;
     statistics?: boolean;
     actions?: boolean;
-    consumables?: EConsumableTitle[];
+    consumables?: IRoborockConsumables;
   };
 }
 export const RoborockWidgetCardFull: React.FC<IProps> = (props: React.PropsWithChildren<IProps>) => {
@@ -38,31 +38,28 @@ export const RoborockWidgetCardFull: React.FC<IProps> = (props: React.PropsWithC
   // const rooms = roborockRoomIds
   const rooms = useObject<string[]>(`${identifier}.rooms`);
 
-  console.log('writing to localStorage');
-  localStorage.setItem('test', 'testValue');
-
-  const consumables: IRoborockConsumables = {};
   // consumables
-  // if (props.components?.consumables?.filter === undefined || props.components?.consumables?.filter !== false) {
-  //   consumables.filter = true;
-  //   // consumables.push('filter');
-  // }
-  // if (props.components?.consumables?.main_brush === undefined || props.components?.consumables?.main_brush !== false) {
-  //   consumables.main_brush = true;
-  //   // consumables.push('main_brush');
-  // }
-  // if (props.components?.consumables?.sensors === undefined || props.components?.consumables?.sensors !== false) {
-  //   consumables.sensors = true;
-  //   // consumables.push('sensors');
-  // }
-  // if (props.components?.consumables?.side_brush === undefined || props.components?.consumables?.side_brush !== false) {
-  //   consumables.side_brush = true;
-  //   // consumables.push('side_brush');
-  // }
-  // if (props.components?.consumables?.water_filter === undefined || props.components?.consumables?.water_filter !== false) {
-  //   consumables.water_filter = true;
-  //   // consumables.push('water_filter');
-  // }
+  const consumables: EConsumableTitle[] = [];
+  if (props.components?.consumables?.filter === undefined || props.components?.consumables?.filter !== false) {
+    // consumables.filter = true;
+    consumables.push(EConsumableTitle.filter);
+  }
+  if (props.components?.consumables?.main_brush === undefined || props.components?.consumables?.main_brush !== false) {
+    // consumables.main_brush = true;
+    consumables.push(EConsumableTitle.main_brush);
+  }
+  if (props.components?.consumables?.sensors === undefined || props.components?.consumables?.sensors !== false) {
+    // consumables.sensors = true;
+    consumables.push(EConsumableTitle.sensors);
+  }
+  if (props.components?.consumables?.side_brush === undefined || props.components?.consumables?.side_brush !== false) {
+    // consumables.side_brush = true;
+    consumables.push(EConsumableTitle.side_brush);
+  }
+  if (props.components?.consumables?.water_filter === undefined || props.components?.consumables?.water_filter !== false) {
+    // consumables.water_filter = true;
+    consumables.push(EConsumableTitle.water_filter);
+  }
   const consumFilter = useObject<number>(`${identifier}.consumable.filter`);
   const consumMain = useObject<number>(`${identifier}.consumable.main_brush`);
   const consumSensors = useObject<number>(`${identifier}.consumable.sensors`);
@@ -135,7 +132,7 @@ export const RoborockWidgetCardFull: React.FC<IProps> = (props: React.PropsWithC
             <Row className="mt-4">
               {(props.components?.maintenance === undefined || props.components.maintenance !== false) && (
                 <Col>
-                  <RoborockConsumables consumables={props.components?.consumables} identifier={identifier} />
+                  <RoborockConsumables consumables={consumables} identifier={identifier} />
                   {/* <Card title="Wartung" size="small"> */}
                   {consumFilter.value <= 10 && (
                     <div>

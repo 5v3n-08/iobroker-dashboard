@@ -31,14 +31,7 @@ export const Roborock: React.FC<IProps> = (props: React.PropsWithChildren<IProps
       {props.widget === 'extended' && (
         <RoborockWidgetCardSmall extended identifier={identifier} openType={props.openType} title={props.title} room={props.room} />
       )}
-      {props.widget === 'full' && (
-        <RoborockWidgetCardFull
-          identifier={identifier}
-          title={props.title}
-          room={props.room}
-          components={{ consumables: [EConsumableTitle.filter, EConsumableTitle.sensors] }}
-        />
-      )}
+      {props.widget === 'full' && <RoborockWidgetCardFull identifier={identifier} title={props.title} room={props.room} />}
     </Fragment>
   );
 };
