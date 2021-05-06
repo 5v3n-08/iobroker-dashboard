@@ -8,7 +8,6 @@ RUN npm install
 
 COPY . /app
 
-RUN npm rebuild node-sass
 RUN npm run build
 
 FROM nginx:1.17.1-alpine
