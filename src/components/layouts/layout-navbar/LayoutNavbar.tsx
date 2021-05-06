@@ -27,7 +27,7 @@ export const LayoutNavbar: React.FC<IProps> = (props: React.PropsWithChildren<IP
         <Fragment>
           <Navbar.Brand as={NavLink} to="/" className="app-brand demo d-lg-none py-0 mr-4">
             {globalConfig.header?.NoBrandIcon === false && <img src={logo} style={{ width: '5%' }} className="mr-2" />}
-            <span className="app-brand-text demo font-weight-normal ml-2">{globalConfig.header?.title ?? 'ioBroker - Dashboard'}</span>
+            <span className="app-brand-text font-weight-normal ml-4">{globalConfig.header?.title ?? 'ioBroker - Dashboard'}</span>
           </Navbar.Brand>
           <Clock format="dddd, DD.MM.YYYY HH:mm:ss" refreshEverySeconds={1} />
           {globalConfig.header?.batteryIdentifier !== undefined && (

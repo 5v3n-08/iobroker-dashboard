@@ -7,6 +7,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { RoborockWidgetCardSmall } from './components/widget/small/RoborockWidgetCardSmall';
 import { RoborockModal } from './components/RoborockModal';
 import { RoborockWidgetCardFull } from './components/widget/full/RoborockWidgetCardFull';
+import { EConsumableTitle } from './components/RoborockConsumables';
 
 interface IProps {
   widget: 'small' | 'extended' | 'full';
