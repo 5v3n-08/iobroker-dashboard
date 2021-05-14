@@ -49,7 +49,7 @@ export const RoborockConsumables: React.FC<IProps> = (props: React.PropsWithChil
             : index === 3
             ? consumSideBrush
             : consumWaterFilter;
-        consum.value <= 100 && (
+        (consum.value ?? 0) <= 100 && (
           <div>
             <div className="small text-muted">{consumable}</div>test
             <Progress

@@ -25,12 +25,15 @@ export const WebsocketContextProvider: React.FC<IProps> = (props: React.PropsWit
       });
 
       socket.on('connect', () => {
-        console.log('connected');
+        dispatch({ type: EWebsocketActions.SET_CONNECTION, payload: true });
+      });
+      socket.on('disconnect', () => {
+        dispatch({ type: EWebsocketActions.SET_CONNECTION, payload: false });
       });
 
-      socket.on('stateChange', (identifier: string, object: IRawObject) => {
+      socket.on('stateChange', (identifier: string, object: IRawObject | null) => {
         // console.log(identifier, object);
-        dispatchStore(ObjectsAction.storeObject({ identifier, object }));
+        if (object) dispatchStore(ObjectsAction.storeObject({ identifier, object: convert(object) }));
       });
 
       dispatch({ type: EWebsocketActions.SET_SOCKET, payload: socket });
@@ -52,41 +55,47 @@ export const WebsocketContextProvider: React.FC<IProps> = (props: React.PropsWit
   );
 
   const getState = useCallback(
-    (identifier: string, subscribe: boolean = true, toJson: boolean = false) => {
+    (identifier: string, subscribe: boolean = true) => {
       if (subscribe && !state.subscriptions.includes(identifier)) {
         _addSubscription(identifier);
       }
-      socket?.emit('getState', identifier, (value: any, object: IRawObject) => {
-        // console.log(identifier, object);
-        if (toJson) object.val = JSON.parse(object.val);
-
-        dispatchStore(ObjectsAction.storeObject({ identifier, object }));
+      socket?.emit('getState', identifier, (value: any, object: IRawObject | null) => {
+        if (object) {
+          dispatchStore(ObjectsAction.storeObject({ identifier, object: convert(object) }));
+        } else {
+          console.warn(`[getState] ${identifier} is ${object}`);
+        }
       });
     },
     [_addSubscription, dispatchStore, socket, state.subscriptions]
   );
 
-  return <WebsocketContext.Provider value={{ setState, getState }}>{props.children}</WebsocketContext.Provider>;
+  return <WebsocketContext.Provider value={{ setState, getState, isConnected: state.isConnected }}>{props.children}</WebsocketContext.Provider>;
 };
 
 interface IContextProps {
   setState(id: string, value: any): void;
   getState(id: string, subscribe?: boolean, toJson?: boolean): void;
+  isConnected: boolean;
 }
 export const WebsocketContext = React.createContext<IContextProps>({
   setState: () => console.log('[useWebsocket] createContext error -> setState'),
   getState: () => console.log('[useWebsocket] createContext error -> getState'),
+  isConnected: false,
 });
 export const useWebsocket = (): IContextProps => React.useContext(WebsocketContext);
 
 //* ----- REDUCER -----
 
 const initialState: IState = {
+  isConnected: false,
   subscriptions: [],
 };
 
 function reducer(state: IState, action: Action): IState {
   switch (action.type) {
+    case EWebsocketActions.SET_CONNECTION:
+      return { ...state, isConnected: action.payload };
     case EWebsocketActions.SET_SOCKET:
       return { ...state, socket: action.payload };
     case EWebsocketActions.ADD_SUBSCRIPTION: {
@@ -102,13 +111,29 @@ function reducer(state: IState, action: Action): IState {
   }
 }
 
+const convert = (object: IRawObject) => {
+  try {
+    if (typeof object.val === 'string') {
+      object.val = JSON.parse(object.val);
+      return object;
+    }
+  } catch (e) {}
+
+  return object;
+};
+
 interface IState {
   socket?: SocketIOClient.Socket;
+  isConnected: boolean;
   subscriptions: string[];
 }
 
-type Action = { type: EWebsocketActions.SET_SOCKET; payload: SocketIOClient.Socket } | { type: EWebsocketActions.ADD_SUBSCRIPTION; payload: string };
+type Action =
+  | { type: EWebsocketActions.SET_SOCKET; payload: SocketIOClient.Socket }
+  | { type: EWebsocketActions.ADD_SUBSCRIPTION; payload: string }
+  | { type: EWebsocketActions.SET_CONNECTION; payload: boolean };
 export enum EWebsocketActions {
+  'SET_CONNECTION',
   'SET_SOCKET',
   'ADD_SUBSCRIPTION',
 }

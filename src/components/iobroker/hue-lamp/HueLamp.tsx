@@ -23,7 +23,7 @@ export const HueLamp: React.FC<IProps> = (props: React.PropsWithChildren<IProps>
 
   const levelValue = level.value;
   useEffect(() => {
-    setBrightness(levelValue);
+    setBrightness(levelValue ?? 0);
   }, [levelValue]);
 
   const longPressEvent = useLongPress(

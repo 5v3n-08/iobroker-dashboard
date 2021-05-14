@@ -58,7 +58,7 @@ export const RoborockFanPower: React.FC<IProps> = (props: React.PropsWithChildre
 
   return (
     <Rate
-      defaultValue={fanPower.value - 100}
+      defaultValue={(fanPower.value ?? 0) - 100}
       onChange={handleChange}
       character={({ index }: { index: number }) => customIcons[index + 1]}
       allowClear={false}

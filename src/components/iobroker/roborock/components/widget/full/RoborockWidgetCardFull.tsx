@@ -34,7 +34,7 @@ export const RoborockWidgetCardFull: React.FC<IProps> = (props: React.PropsWithC
   const { identifier, className } = props;
   // const on = useObject<boolean>(identifier);
   const battery = useObject<number>(`${identifier}.info.battery`);
-  const queue = useObject<string[]>(`${identifier}.info.queue`, { toJson: true });
+  const queue = useObject<string[]>(`${identifier}.info.queue`);
   // const rooms = roborockRoomIds
   const rooms = useObject<string[]>(`${identifier}.rooms`);
 
@@ -83,7 +83,7 @@ export const RoborockWidgetCardFull: React.FC<IProps> = (props: React.PropsWithC
           <FontAwesomeIcon icon={['fas', 'battery-full']} /> {battery.value} %
         </Fragment>
       }
-      color={battery.value <= 10 ? 'red' : battery.value < 20 ? 'yellow' : 'primary'}
+      color={battery.value ?? 0 <= 10 ? 'red' : battery.value ?? 0 < 20 ? 'yellow' : 'primary'}
       placement="start"
     >
       <Card
@@ -134,7 +134,7 @@ export const RoborockWidgetCardFull: React.FC<IProps> = (props: React.PropsWithC
                 <Col>
                   <RoborockConsumables consumables={consumables} identifier={identifier} />
                   {/* <Card title="Wartung" size="small"> */}
-                  {consumFilter.value <= 10 && (
+                  {consumFilter.value && consumFilter.value <= 10 && (
                     <div>
                       <div className="small text-muted">Filter</div>
                       <Progress
@@ -148,7 +148,7 @@ export const RoborockWidgetCardFull: React.FC<IProps> = (props: React.PropsWithC
                       />
                     </div>
                   )}
-                  {consumMain.value <= 10 && (
+                  {consumMain.value && consumMain.value <= 10 && (
                     <div>
                       <div className="small text-muted">Hauptbürste</div>
                       <Progress
@@ -162,7 +162,7 @@ export const RoborockWidgetCardFull: React.FC<IProps> = (props: React.PropsWithC
                       />
                     </div>
                   )}
-                  {consumSensors.value <= 10 && (
+                  {consumSensors.value && consumSensors.value <= 10 && (
                     <div>
                       <div className="small text-muted">Sensoren</div>
                       <Progress
@@ -176,7 +176,7 @@ export const RoborockWidgetCardFull: React.FC<IProps> = (props: React.PropsWithC
                       />
                     </div>
                   )}
-                  {consumSideBrush.value <= 10 && (
+                  {consumSideBrush.value && consumSideBrush.value <= 10 && (
                     <div>
                       <div className="small text-muted">Seitenbürste</div>
                       <Progress
@@ -190,7 +190,7 @@ export const RoborockWidgetCardFull: React.FC<IProps> = (props: React.PropsWithC
                       />
                     </div>
                   )}
-                  {consumWaterFilter.value <= 10 && (
+                  {consumWaterFilter.value && consumWaterFilter.value <= 10 && (
                     <div>
                       <div className="small text-muted">Wasser Filter</div>
                       <Progress
