@@ -1,4 +1,4 @@
-# ----- !!! NOT COMMIT THIS FILES TO GITHUB !!! ------
+# ----- !!! NOT COMMIT THIS FILES TO MASTER BRANCH ON GITHUB !!! ------
 
 - pages/.
 - routes/routes.ts
