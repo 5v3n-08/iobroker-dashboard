@@ -1,3 +1,8 @@
+# ----- !!! NOT COMMIT THIS FILES TO GITHUB !!! ------
+
+- pages/.
+- routes/routes.ts
+
 # ----- Deploy first time with docker ------
 
 git clone -b BRANCHE https://github.com/5v3n-08/iobroker-dashboard.git
