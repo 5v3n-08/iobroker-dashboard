@@ -12,7 +12,7 @@ const Landing: React.FC<IProps> = (props: React.PropsWithChildren<IProps>) => {
         <HueLamp className="mx-1" name="Flur" identifier="hue.0.Flur" />
       </div>
       <div className="row  m-2">
-        <MyTime identifier="mytime.0.Countdown.test" />
+        <MyTime identifier="mytime.0.Countdown.Waschmaschine" />
       </div>
     </Fragment>
   );
