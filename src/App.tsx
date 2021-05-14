@@ -8,7 +8,7 @@ import 'moment/locale/de';
 //* ----- Import styles -----
 import 'semantic-ui-css/semantic.min.css';
 // import './customSemantic.less';
-// import './customAntd.less';
+import './customAntd.less';
 import './App.scss';
 import './vendor/styles/bootstrap.scss';
 import './vendor/styles/appwork.scss';
