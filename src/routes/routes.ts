@@ -1,4 +1,3 @@
-import { LayoutHorizontalSidenav as mbigalke } from 'components/layouts/mbigalke/LayoutHorizontalSidenav';
 import { LayoutHorizontalSidenav as sstiels } from 'components/layouts/sstiels/LayoutHorizontalSidenav';
 import { IRoute, lazy } from './routes.config';
 
