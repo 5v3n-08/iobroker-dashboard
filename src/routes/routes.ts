@@ -1,3 +1,5 @@
+import { LayoutHorizontalSidenav as mbigalke } from 'components/layouts/mbigalke/LayoutHorizontalSidenav';
+import { LayoutHorizontalSidenav as sstiels } from 'components/layouts/sstiels/LayoutHorizontalSidenav';
 import { IRoute, lazy } from './routes.config';
 
 export const routes: IRoute[] = [
@@ -5,6 +7,7 @@ export const routes: IRoute[] = [
     path: '/',
     name: 'Übersicht',
     icon: 'fas fa-home',
+    layout: sstiels,
     onSidenav: true,
     component: () => lazy(() => import('pages/landing/Landing')),
   },
@@ -12,6 +15,7 @@ export const routes: IRoute[] = [
     path: '/badezimmer',
     name: 'Badezimmer',
     icon: 'fas fa-bath',
+    layout: sstiels,
     onSidenav: true,
     component: () => lazy(() => import('pages/badezimmer/Badezimmer')),
   },

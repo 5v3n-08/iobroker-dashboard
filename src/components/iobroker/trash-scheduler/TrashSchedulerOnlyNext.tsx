@@ -17,14 +17,19 @@ export const TrashSchedulerOnlyNext: React.FC<IProps> = (props: React.PropsWithC
 
   const trashTypes = findTrashType(types.value);
   const daysLeftText = () => {
-    if (daysLeft.value == 0) return 'Heute';
-    if (daysLeft.value == 1) return 'Morgen';
-    if (daysLeft.value <= 7) return moment(date.value, 'DD.MM.YYYY').format('dddd');
+    if (daysLeft.value) {
+      if (daysLeft.value == 0) return 'Heute';
+      if (daysLeft.value == 1) return 'Morgen';
+      if (daysLeft.value <= 7) return moment(date.value, 'DD.MM.YYYY').format('dddd');
+    }
     return moment(date.value, 'DD.MM.YYYY').format('DD.MM.YYYY');
   };
 
   return (
-    <Card className={['text-center', daysLeft.value <= 1 ? 'border-danger' : null].join(' ')} bodyStyle={{ padding: '0.75rem 1rem' }}>
+    <Card
+      className={['text-center', daysLeft.value && daysLeft.value <= 1 ? 'border-danger' : null].join(' ')}
+      bodyStyle={{ padding: '0.75rem 1rem' }}
+    >
       <div className="small text-muted">Nächste Abholung:</div>
       <h4>{daysLeftText()}</h4>
       <div className="d-flex justify-content-center">
