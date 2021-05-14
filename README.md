@@ -5,6 +5,7 @@
 
 # ----- Deploy first time with docker ------
 
+cd /home
 git clone -b BRANCHE https://github.com/5v3n-08/iobroker-dashboard.git
 cd iobroker-dashboard/
 nano .env (fill data! Only first time)
