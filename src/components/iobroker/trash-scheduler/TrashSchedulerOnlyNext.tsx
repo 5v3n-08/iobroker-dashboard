@@ -1,9 +1,9 @@
-import { Card } from 'antd';
 import { useObject } from 'hooks/useObject';
 import React from 'react';
 import { findTrashType, trashImages } from './TrashHelper';
 import _ from 'lodash';
 import moment from 'moment';
+import { Card } from 'semantic-ui-react';
 
 interface IProps {
   identifier: string;
@@ -26,19 +26,18 @@ export const TrashSchedulerOnlyNext: React.FC<IProps> = (props: React.PropsWithC
   };
 
   return (
-    <Card
-      className={['text-center', daysLeft.value && daysLeft.value <= 1 ? 'border-danger' : null].join(' ')}
-      bodyStyle={{ padding: '0.75rem 1rem' }}
-    >
-      <div className="small text-muted">Nächste Abholung:</div>
-      <h4>{daysLeftText()}</h4>
-      <div className="d-flex justify-content-center">
-        {trashTypes.map((type) => (
-          <div key={type}>
-            <img width={40} src={trashImages[type]} alt="" />
-          </div>
-        ))}
-      </div>
+    <Card className={['default-grid-card', daysLeft.value && daysLeft.value <= 1 ? 'border-danger' : null].join(' ')}>
+      <Card.Content textAlign="center">
+        <div className="small text-muted">Nächste Abholung:</div>
+        <h4>{daysLeftText()}</h4>
+        <div className="d-flex justify-content-center">
+          {trashTypes.map((type) => (
+            <div key={type}>
+              <img width={40} src={trashImages[type]} alt="" />
+            </div>
+          ))}
+        </div>
+      </Card.Content>
     </Card>
   );
 };

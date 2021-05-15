@@ -1,6 +1,6 @@
 import { useObject } from 'hooks/useObject';
 import moment from 'moment';
-import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Card } from 'semantic-ui-react';
 import washingMachine from './svg/washing-machine.svg';
 
@@ -68,7 +68,7 @@ export const MyTime: React.FC<IProps> = (props: React.PropsWithChildren<IProps>)
         {action.value === 'run' && (
           <div className="text-center">
             <img src={washingMachine} width={50} height={50} />
-            <h1 className="mt-2 font-weight-bold">
+            <h1 className="mt-2 font-weight-bold text-dark">
               {hours()}:{minutes()}:{seconds()}
             </h1>
           </div>
@@ -76,7 +76,7 @@ export const MyTime: React.FC<IProps> = (props: React.PropsWithChildren<IProps>)
         {action.value === 'end' && (
           <div className="text-center">
             <img src={washingMachine} width={50} height={50} />
-            <h1 className="mt-2 font-weight-bold">FERTIG!</h1>
+            <h1 className="mt-2 font-weight-bold text-dark">FERTIG!</h1>
           </div>
         )}
       </Card.Content>
