@@ -8,6 +8,6 @@ export const routes: IRoute[] = [
     icon: 'fas fa-home',
     layout: sstiels,
     onSidenav: true,
-    component: () => lazy(() => import('pages/playground/Playground')),
+    component: () => lazy(() => import('pages/landing/Landing')),
   },
 ];
