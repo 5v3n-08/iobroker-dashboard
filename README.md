@@ -14,7 +14,7 @@ docker run --name iobroker-dashboard -p 8000:80/tcp -d --restart always iobroker
 
 # ----- Deploy on existing docker ------
 
-cd iobroker-dashboard/
+cd /home/iobroker-dashboard/
 sudo git pull
 docker build -t iobroker-dashboard:v1 .
 docker stop iobroker-dashboard

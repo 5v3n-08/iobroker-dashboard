@@ -1,6 +1,6 @@
-import { Card } from 'antd';
-import { useObject } from 'hooks/useObject';
 import React from 'react';
+import { useObject } from 'hooks/useObject';
+import { Card } from 'semantic-ui-react';
 
 import lightbulbOn from 'assets/svg/lightbulb_on.svg';
 import lightbulbOff from 'assets/svg/lightbulb_off.svg';
@@ -20,12 +20,14 @@ export const PowerSwitch: React.FC<IProps> = (props: React.PropsWithChildren<IPr
   const on = useObject<boolean>(`${identifier}`);
 
   return (
-    <Card className={props.className} bodyStyle={{ padding: '0.75rem 2rem' }} onClick={() => on.setValue(!on.value)}>
-      <div className="text-center small text-muted">{props.room}</div>
-      <div className="text-center small">{props.name}</div>
-      <div className="text-center my-2">
-        <img src={on.value ? iconSet.icons.on : iconSet.icons.off} style={{ height: iconSet.size, width: iconSet.size }} />
-      </div>
+    <Card className={[props.className, 'default-grid-card'].join(' ')} onClick={() => on.setValue(!on.value)}>
+      <Card.Content>
+        <div className="text-center small text-muted">{props.room}</div>
+        <div className="text-center small text-dark">{props.name}</div>
+        <div className="text-center my-2">
+          <img src={on.value ? iconSet.icons.on : iconSet.icons.off} style={{ height: iconSet.size, width: iconSet.size }} />
+        </div>
+      </Card.Content>
     </Card>
   );
 };
