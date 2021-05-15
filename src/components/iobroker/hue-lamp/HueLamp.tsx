@@ -2,10 +2,9 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { useObject } from 'hooks/useObject';
 import lightbulbOn from 'assets/svg/lightbulb_on.svg';
 import lightbulbOff from 'assets/svg/lightbulb_off.svg';
-import { Avatar, Card, Modal, Slider } from 'antd';
-import Meta from 'antd/lib/card/Meta';
+import { Modal, Slider } from 'antd';
 import { useLongPress } from 'hooks/useLongPress';
-import { Button } from 'semantic-ui-react';
+import { Button, Card } from 'semantic-ui-react';
 import _ from 'lodash';
 
 interface IProps {
@@ -37,12 +36,14 @@ export const HueLamp: React.FC<IProps> = (props: React.PropsWithChildren<IProps>
 
   return (
     <Fragment>
-      <Card className={props.className} {...longPressEvent} bodyStyle={{ padding: '0.75rem 2rem' }}>
-        <div className="text-center small text-muted">{props.room}</div>
-        <div className="text-center small">{props.name}</div>
-        <div className="text-center my-2">
-          <img src={on.value ? lightbulbOn : lightbulbOff} style={{ height: 50, width: 50 }} />
-        </div>
+      <Card className={[props.className, 'default-grid-card'].join(' ')} {...longPressEvent}>
+        <Card.Content>
+          <div className="text-center small text-muted">{props.room}</div>
+          <div className="text-center small">{props.name}</div>
+          <div className="text-center my-2">
+            <img src={on.value ? lightbulbOn : lightbulbOff} style={{ height: 50, width: 50 }} />
+          </div>
+        </Card.Content>
       </Card>
       <Modal title={<div className="text-center">{`${props.name}`}</div>} visible={isModalOpen} footer={false} onCancel={() => setModalOpen(false)}>
         <div className="d-flex justify-content-center">
