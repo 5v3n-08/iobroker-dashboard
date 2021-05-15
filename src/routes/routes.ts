@@ -9,14 +9,6 @@ export const routes: IRoute[] = [
     icon: 'fas fa-home',
     layout: sstiels,
     onSidenav: true,
-    component: () => lazy(() => import('pages/landing/Landing')),
-  },
-  {
-    path: '/badezimmer',
-    name: 'Badezimmer',
-    icon: 'fas fa-bath',
-    layout: sstiels,
-    onSidenav: true,
-    component: () => lazy(() => import('pages/badezimmer/Badezimmer')),
+    component: () => lazy(() => import('pages/playground/Playground')),
   },
 ];
